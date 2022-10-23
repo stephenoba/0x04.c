@@ -5,7 +5,7 @@
 static unsigned long next = 1;
 
 /**
- * _rand - custom rand function that generates random numbersi from 33 - 122
+ * _rand - custom rand function that generates random numbers from 33 - 122
  *
  * Return: random number
  */
@@ -37,12 +37,16 @@ void _srand(unsigned int seed)
  */
 int main(void)
 {
-	int ascii_total, i, diff, quo1, quo2;
+	int ascii_total, i, diff;
 	int r;
 	time_t seed = time(NULL);
 
 	_srand(seed);
 	ascii_total = i = 0;
+	/* 
+	 * ensure that random numbers generated don't exceed a total
+	 * of 2772
+	 */
 	while (ascii_total <= 0xAD4 - 0x7A)
 	{
 		r = (int)_rand();
@@ -50,12 +54,8 @@ int main(void)
 		ascii_total += r;
 		i++;
 	}
+	/* get the difference left and generate remaining characters */
 	diff = (0xAD4 - ascii_total);
-	quo1 = diff / 2;
-	if (diff % 2 == 0)
-		quo2 = quo1;
-	else
-		quo2 = quo1 + 1;
-	printf("%c%c", quo1, quo2);
+	printf("%c", diff);
 	exit(EXIT_SUCCESS);
 }
